@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CampusConnect.Models.Notice>
+
+@{
+    ViewData["Title"] = "Campus Announcements & Notices";
+}
+
+<div class="container my-4">
+    <!-- Header Title & Add Notice Button -->
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h3 class="fw-bold mb-0">📢 Campus Announcements & Notices</h3>
+        <a asp-action="CreateNotice" class="btn btn-dark btn-sm fw-bold">+ Add New Notice</a>
+    </div>
+
+    <hr style="border-top: 1px dashed #000;" class="mb-4" />
+
+    <!-- Search & Filter Bar -->
+    <div class="d-flex align-items-center gap-3 mb-4 flex-wrap">
+        <span class="fw-bold">Search:</span>
+        <div class="input-group" style="max-width: 300px;">
+            <span class="input-group-text bg-white border-end-0">🔍</span>
+            <input type="text" class="form-control border-start-0" placeholder="Enter keyword...">
+        </div>
+
+        <span class="fw-bold ms-3">Category:</span>
+        <select class="form-select" style="max-width: 200px;">
+            <option selected>All Categories</option>
+            <option value="Exams">Exams</option>
+            <option value="Events">Events</option>
+            <option value="Sports">Sports</option>
+            <option value="General">General</option>
+        </select>
+
+        <button class="btn btn-dark px-4 fw-bold">Search</button>
+    </div>
+
+    <!-- Notices Cards List -->
+    @if (!Model.Any())
+    {
+        <div class="alert alert-light border text-center my-4">No notices found. Be the first to create one!</div>
+    }
+    else
+    {
+        @foreach (var item in Model)
+        {
+            <div class="card mb-4 border-secondary rounded-3 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h4 class="fw-bold text-dark mb-1">📌 @item.Title</h4>
+                        <span class="fw-bold text-dark">📅 @item.PostedDate.ToString("dd-MMM-yyyy")</span>
+                    </div>
+
+                    <p class="text-muted mb-2">
+                        <strong>Category:</strong> @item.Category &nbsp;|&nbsp; <strong>Posted By:</strong> @item.PostedBy
+                    </p>
+
+                    <hr style="border-top: 1px dashed #aaa;" class="my-3" />
+
+                    <p class="card-text text-dark fs-6">
+                        @item.Description
+                    </p>
+
+                    <div class="text-end mt-3">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark font-weight-bold px-3 py-1">Read Full Notice »</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

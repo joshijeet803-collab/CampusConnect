@@ -1,0 +1,66 @@
+﻿@model CampusConnect.Models.Notice
+
+@{
+    ViewData["Title"] = "Create New Notice / Announcement";
+}
+
+<div class="container my-4">
+    <!-- Header Title & Back Button -->
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h3 class="fw-bold mb-0">⊕ Create New Notice / Announcement</h3>
+        <a asp-action="Index" class="btn btn-outline-dark btn-sm">← Back to Home</a>
+    </div>
+
+    <hr style="border-top: 1px dashed #000;" class="mb-4" />
+
+    <form asp-action="CreateNotice" method="post" class="border border-secondary p-4 rounded-3">
+        <!-- Notice Title -->
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label fw-bold">Notice Title:</label>
+            <input asp-for="Title" class="form-control" placeholder="e.g., Mid-Sem Exam Schedule 2026" required />
+        </div>
+
+        <!-- Category & Department -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="Category" class="form-label fw-bold">Category:</label>
+                <select asp-for="Category" class="form-select" required>
+                    <option value="" selected disabled>Select Category</option>
+                    <option value="Exams">Exams</option>
+                    <option value="Events">Events</option>
+                    <option value="Sports">Sports</option>
+                    <option value="General">General</option>
+                </select>
+                <small class="text-muted">(Exams / Events / Sports / General)</small>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="TargetDepartment" class="form-label fw-bold">Target Department:</label>
+                <select asp-for="TargetDepartment" class="form-select">
+                    <option value="Computer Engineering">Computer Engineering</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="All Departments">All Departments</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Notice Description -->
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label fw-bold">Notice Description:</label>
+            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter complete notice text and details here..." required></textarea>
+        </div>
+
+        <!-- Attach Document -->
+        <div class="mb-4">
+            <label class="form-label fw-bold d-block">Attach Document (Optional):</label>
+            <input type="file" class="form-control d-inline-block" style="width: auto;" />
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-dark px-4 fw-bold">⬆ Publish Notice</button>
+            <a asp-action="Index" class="btn btn-outline-dark px-4">Cancel</a>
+        </div>
+    </form>
+</div>

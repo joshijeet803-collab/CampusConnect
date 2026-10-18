@@ -66,8 +66,9 @@
 *.html linguist-detectable=false
 *.cs linguist-detectable=true
 
-*.cshtml linguist-language=ASP.NET
-*.cshtml linguist-detectable=true
+Views/Home/*.cshtml linguist-language=ASP.NET
+Views/Home/*.cshtml linguist-detectable=true
+Views/Shared/* linguist-detectable=false
 *.cs linguist-language=C#
 *.cs linguist-detectable=true
 *.html linguist-detectable=false

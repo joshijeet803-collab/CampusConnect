@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "CampusConnect Login";
+}
+
+<div class="container my-5" style="max-width: 450px;">
+    <div class="card shadow-sm border-secondary">
+        <div class="card-header bg-dark text-white text-center py-3">
+            <h4 class="mb-0">🔐 CampusConnect Login</h4>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email Address</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter Email ID" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="Enter Password" required />
+                </div>
+                <button type="submit" class="btn btn-dark w-100 fw-bold py-2">Sign In</button>
+            </form>
+        </div>
+    </div>
+</div>

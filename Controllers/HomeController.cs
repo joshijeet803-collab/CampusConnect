@@ -12,7 +12,6 @@ namespace CampusConnect.Controllers
         {
             _context = context;
 
-            // Seed initial sample notices if database is empty
             if (!_context.Notices.Any())
             {
                 _context.Notices.AddRange(
@@ -39,20 +38,17 @@ namespace CampusConnect.Controllers
             }
         }
 
-        // GET: Notice Board List Page
         public IActionResult Index()
         {
             var notices = _context.Notices.OrderByDescending(n => n.PostedDate).ToList();
             return View(notices);
         }
 
-        // GET: Create Notice Form Page
         public IActionResult CreateNotice()
         {
             return View();
         }
 
-        // POST: Save New Notice to Database
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateNotice(Notice notice)
@@ -69,7 +65,7 @@ namespace CampusConnect.Controllers
             }
             return View(notice);
         }
-        // GET: Notice Details Page
+
         public IActionResult Details(int id)
         {
             var notice = _context.Notices.FirstOrDefault(n => n.Id == id);
@@ -79,6 +75,54 @@ namespace CampusConnect.Controllers
             }
             return View(notice);
         }
+
+        // POST: Delete Notice from Database
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteNotice(int id)
+        {
+            var notice = _context.Notices.FirstOrDefault(n => n.Id == id);
+            if (notice != null)
+            {
+                _context.Notices.Remove(notice);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(string email, string password)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                string displayName = email.Contains("@") ? email.Split('@')[0] : email;
+
+                Response.Cookies.Append("UserRole", "Admin");
+                Response.Cookies.Append("UserName", displayName);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("UserRole");
+            Response.Cookies.Delete("UserName");
+            return RedirectToAction(nameof(Login));
+        }
+
         public IActionResult Privacy()
         {
             return View();

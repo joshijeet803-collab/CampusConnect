@@ -11,10 +11,18 @@ namespace CampusConnect
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // SQL Server LocalDB Database Connection
             builder.Services.AddDbContext<CampusConnect.Models.ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("CampusConnectDb"));
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusConnectDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
 
             var app = builder.Build();
+
+            // Automatically create database and tables on startup
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<CampusConnect.Models.ApplicationDbContext>();
+                dbContext.Database.EnsureCreated();
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
